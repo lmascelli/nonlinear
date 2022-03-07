@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from nonlinear import core
+from nonlinear import core, plotting
 from typing import List
 
 
@@ -33,6 +33,9 @@ system.manifold = manifold
 x0 = np.array([1., 10.])
 params = [0.1, 0.2]
 
-t = core.traiectory(system, x0, params, 200, 1e-3)
-plt.plot(t[0, :], t[1, :])
+t = core.traiectory(system, x0, params, 200000, 1e-3)
+vf = core.vector_field(system, params, [-100, 35], [-100, 100], [30, 30])
+
+plt.figure()
+plotting.vector_field(vf, [-100, 35], [-100, 100], [30, 30])
 plt.show()
