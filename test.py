@@ -58,25 +58,27 @@ vf = core.vector_field(system, params, xrange, yrange, sampling_points)
 
 def on_key_press(event):
     global vf, ax, fig
-    if event.key == 'd' and params[0] < 1:
+    if event.key == 'right' and params[0] < 1:
         print('Increasing alpha')
         params[0] += 0.1
-    if event.key == 'a' and params[0] > 0:
+    if event.key == 'left' and params[0] > 0:
         print('Decreasing alpha')
         params[0] -= 0.1
-    if event.key == 'w' and params[1] < 1:
+    if event.key == 'up' and params[1] < 1:
         print('Increasing betha')
         params[1] += 0.1
-    if event.key == 'r' and params[1] > 0:
+    if event.key == 'down' and params[1] > 0:
         print('Decreasing betha')
         params[1] -= 0.1
     vf = core.vector_field(system, params, xrange, yrange, sampling_points)
     ax.clear()
     plotting.vector_field(vf, xrange, yrange, sampling_points, ax)
+    ax.set_title(f'a = {params[0]}, b = {params[1]}')
     fig.canvas.draw()
 
 
 fig, ax = plt.subplots()
 fig.canvas.mpl_connect('key_press_event', on_key_press)
 plotting.vector_field(vf, xrange, yrange, sampling_points, ax)
+ax.set_title(f'a = {params[0]}, b = {params[1]}')
 plt.show()

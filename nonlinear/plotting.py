@@ -13,7 +13,9 @@ def vector_field(vf: List[List[np.ndarray]], xrange: List[float],
         for j in range(0, points[1]):
             if axes:
                 axes.quiver(x[i], y[j], vf[j][i][0], vf[j][i][1],
-                       width=0.003)
+                            width=0.003,
+                            scale=1000)
             else:
                 plt.quiver(x[i], y[j], vf[j][i][0], vf[j][i][1],
-                       width=0.003)
+                           width=0.001,
+                           scale=1000)
