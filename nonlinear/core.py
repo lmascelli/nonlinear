@@ -1,6 +1,5 @@
 import numpy as np
-import matplotlib.pyplot as plt
-from typing import List, Callable, Tuple, Optional
+from typing import List, Callable, Tuple
 
 # Function Types
 EQUATION = 0
@@ -20,7 +19,7 @@ class SystemDescriptor:
 
     functions: List[System_Function] = []
 
-    manifold: Callable[[np.ndarray], int] 
+    manifold: Callable[[np.ndarray], int]
 
     def __init__(self, function_number: int = 1) -> None:
         self.function_number = function_number
@@ -48,7 +47,7 @@ def integrate(system: SystemDescriptor, x0: np.ndarray, params: List[float],
 
     if previous_label != after_label:
         return (x0, after_label)
-    else:    
+    else:
         return (x0, -1)
 
 
@@ -67,11 +66,11 @@ def traiectory(system: SystemDescriptor, x0: np.ndarray, params: List[float],
 
 
 def vector_field(system: SystemDescriptor, params: List[float],
-                 xrange: List[float], yrange:List[float],
-                 points:List[int])-> List[List[np.ndarray]]:
+                 xrange: List[float], yrange: List[float],
+                 points: List[int]) -> List[List[np.ndarray]]:
     x = np.linspace(xrange[0], xrange[1], points[0])
     y = np.linspace(yrange[0], yrange[1], points[1])
-    
+
     ret = []
 
     for j in range(0, points[1]):
@@ -82,7 +81,7 @@ def vector_field(system: SystemDescriptor, params: List[float],
             if system.functions[label].type == EQUATION:
                 row.append(system.functions[label].f(point, params))
             else:
-                row.append(np.array([0,0]))
+                row.append(np.array([0, 0]))
         ret.append(row)
 
     return ret
