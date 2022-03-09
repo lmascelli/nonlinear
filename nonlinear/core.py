@@ -7,12 +7,20 @@ MAP = 1
 
 INTEGRATION_METHOD = "Euler"
 
+# A prototype for a function ruling the system
+# It must define the function and the type:
+# - EQUATION: and ODE function
+# - MAP: a mapping function
+
 
 class System_Function:
     def __init__(self, f: Callable[[np.ndarray, List[float]], np.ndarray],
                  type: int):
         self.f = f
         self.type = type
+
+# A class for managing the functions ruling the system
+# Used in the following analysis functions
 
 
 class SystemDescriptor:
@@ -30,6 +38,10 @@ class SystemDescriptor:
                      function_type: int) -> None:
         self.functions.append(System_Function(function, function_type))
         self.function_number += 1
+
+
+# Integrate a time step of a System
+# TODO implement also Runge-Kutta algorithm
 
 
 def integrate(system: SystemDescriptor, x0: np.ndarray, params: List[float],
@@ -51,6 +63,7 @@ def integrate(system: SystemDescriptor, x0: np.ndarray, params: List[float],
         return (x0, -1)
 
 
+# Integrate and store N_STEPS of a system starting from X0
 def traiectory(system: SystemDescriptor, x0: np.ndarray, params: List[float],
                n_steps: int, step: float) -> np.ndarray:
     t_ret = np.zeros(shape=(2, n_steps))
@@ -65,6 +78,7 @@ def traiectory(system: SystemDescriptor, x0: np.ndarray, params: List[float],
     return t_ret
 
 
+# Compute the vector field of a 2D system in a given param space
 def vector_field(system: SystemDescriptor, params: List[float],
                  xrange: List[float], yrange: List[float],
                  points: List[int]) -> List[List[np.ndarray]]:
@@ -85,3 +99,8 @@ def vector_field(system: SystemDescriptor, params: List[float],
         ret.append(row)
 
     return ret
+
+
+def shooting(system: SystemDescriptor, x0: np.ndarray, params: List[float],
+             T: float, step: float) -> None:
+    pass

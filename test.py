@@ -48,37 +48,18 @@ system.manifold = manifold
 
 ### Vector field of the system varying a parameter ###
 
-params = [0.1, 1]
+params = [0.5, 0.5]
 xrange = [-100., 35.]
 yrange = [-100., 100.]
 sampling_points = [30, 30]
 
-vf = core.vector_field(system, params, xrange, yrange, sampling_points)
+# plotting.test_vector_field(system, params,
+#                           plotting.Field_Options(
+#                               xrange, yrange, sampling_points))
 
+x0 = np.array([-10., -150.])
 
-def on_key_press(event):
-    global vf, ax, fig
-    if event.key == 'right' and params[0] < 1:
-        print('Increasing alpha')
-        params[0] += 0.1
-    if event.key == 'left' and params[0] > 0:
-        print('Decreasing alpha')
-        params[0] -= 0.1
-    if event.key == 'up' and params[1] < 1:
-        print('Increasing betha')
-        params[1] += 0.1
-    if event.key == 'down' and params[1] > 0:
-        print('Decreasing betha')
-        params[1] -= 0.1
-    vf = core.vector_field(system, params, xrange, yrange, sampling_points)
-    ax.clear()
-    plotting.vector_field(vf, xrange, yrange, sampling_points, ax)
-    ax.set_title(f'a = {params[0]}, b = {params[1]}')
-    fig.canvas.draw()
+t = core.traiectory(system, x0, params, 100000, 2e-4)
+plt.plot(t[1])
 
-
-fig, ax = plt.subplots()
-fig.canvas.mpl_connect('key_press_event', on_key_press)
-plotting.vector_field(vf, xrange, yrange, sampling_points, ax)
-ax.set_title(f'a = {params[0]}, b = {params[1]}')
 plt.show()
